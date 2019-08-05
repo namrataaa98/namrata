@@ -112,6 +112,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				
 				Employee emp = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
 				empList.add(emp);
+				
+				
 			
 			}
 			
