@@ -21,12 +21,13 @@ public class Database01 {
 		Statement st = con.createStatement();
 		
 		//create table 
-		String sql = "CREATE TABLE salesmen " + 
-		"(salesman_id INTEGER not NULL, " + 
-		"name VARCHAR(25), " + 
+		String sql = "CREATE TABLE customer " + 
+		"(customer_id INTEGER not NULL, " + 
+		"cust_name VARCHAR(25), " + 
 		"city varchar(35), " +
-		"commission decimal, " +
-		"PRIMARY KEY (salesman_id))";
+		"grade INTEGER, " +
+		"salesman_id INTEGER, " +
+		"PRIMARY KEY (customer_id))";
 		st.executeUpdate(sql); // for saving purpose
 		System.out.println("Created table in given database..."); 
 		

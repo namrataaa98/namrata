@@ -7,12 +7,13 @@ import pojo.Users;
 
 public interface LoginService2 {
 	
-	public void printBankLoginMenu(UserInfo logInfo);
-	public void transactionFunction(int choice, UserInfo logInfo);
-	public void continueTransaction(UserInfo logInfo);
-	public void printWrongInput(UserInfo logInfo);
-	public void readFromFileUsers(List<UserInfo> usersList);
-	public void writeToFile(UserInfo LogInfo);
-	public void updateBalance(UserInfo logInfo, String strTemp);
+	public boolean callUserLoggedIn(String loginID, String password, Users users);
+	
+	public void callPrintBankLoginMenu(UserInfo logInfo, Users users);
+	public void callTransactionFunction(int choice, UserInfo logInfo, Users users);
+	public void callContinueTransaction(UserInfo logInfo, Users users);
+	public void callPrintWrongInput(UserInfo logInfo, Users users);
+	public void callReadFromFileUsers(Users users);
+	public void callUpdateBalance(UserInfo logInfo, String strTemp, Users users);
 
 }

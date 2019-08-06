@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 
 import pojo.UserInfo;
+import pojo.Users;
 import service.LoginServiceImpl2;
 
 public class RegisterController {
@@ -16,7 +17,8 @@ public class RegisterController {
 	LoginServiceImpl2 loginService; // LoginService is an interface
 	UserInfo user; 
 	Scanner s = new Scanner(System.in);
-	List<UserInfo> usersList = new ArrayList<UserInfo>();
+	//List<UserInfo> usersList = new ArrayList<UserInfo>();
+	Users users = new Users();
 	
 	public void userRegController()
 	{
@@ -28,13 +30,15 @@ public class RegisterController {
 		
 		int choice = 0;
 		
+		
+		
 		while(true) //true means continue forever till there's a break
 		{
 			try 
 			{
 				Message();
 				choice = s.nextInt();
-				mainUserInput(choice);
+				mainUserInput(choice, users);
 			} 
 			catch (Exception e) 
 			{
@@ -47,7 +51,7 @@ public class RegisterController {
 	}
 	
 	
-	public void mainUserInput(int choice)
+	public void mainUserInput(int choice, Users users)
 	{
 		LoginController2 loginController = new LoginController2();
 		try 
@@ -56,7 +60,7 @@ public class RegisterController {
 			{
 			case 1 : regUserInput();
 					break;
-			case 2 : loginController.userLoginController();
+			case 2 : loginController.userLoginController(users);
 					break;
 			case 3 : System.out.println("Forgot Password");
 					break;
@@ -128,10 +132,10 @@ public class RegisterController {
 		} while (success == false);
 		
 		UserInfo user = new UserInfo(email, password, color, bankAmount);
-		usersList.add(user);
+		users.getUsersList().add(user);
 		
 		try {
-			fw = new FileWriter("User2.csv", true);
+			fw = new FileWriter("UsersNew.csv", true);
 			bw = new BufferedWriter(fw);
 			
 			bw.write(user.toString() + "\n");
@@ -150,7 +154,7 @@ public class RegisterController {
 		
 		
 		
-		System.out.println(usersList);
+		System.out.println(users.getUsersList());
 		
 		mainMenu();
 		

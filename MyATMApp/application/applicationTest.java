@@ -17,12 +17,9 @@ public class applicationTest {
 		
 		registerController.userRegController();
 		
-	
 	}
 	
 
-	
-	
 }
 
 

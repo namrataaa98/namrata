@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Users {
 	
-List<UserInfo> usersList = new ArrayList<UserInfo>();
+	public List<UserInfo> usersList = new ArrayList<UserInfo>();
 	
 	public List<UserInfo> getUsersList() {
 		return usersList;
@@ -13,6 +13,16 @@ List<UserInfo> usersList = new ArrayList<UserInfo>();
 
 	public void setUsersList(List<UserInfo> usersList) {
 		this.usersList = usersList;
+	}
+	
+
+//	public Users(List<UserInfo> usersList) {
+//		this.usersList = usersList;
+//	}
+	
+	@Override
+	public String toString() {
+		return "LoginDAOImpl2 [usersList=" + usersList + "]";
 	}
 
 	

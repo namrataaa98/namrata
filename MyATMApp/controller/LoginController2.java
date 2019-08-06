@@ -19,61 +19,30 @@ import service.LoginServiceImpl2;
 
 
 public class LoginController2 {
-	List<UserInfo> usersList = new ArrayList<UserInfo>();
+	//List<UserInfo> usersList = new ArrayList<UserInfo>();
+	//Users users = new Users();
 	LoginService2 loginService = new LoginServiceImpl2();
 	Scanner s = new Scanner(System.in);
 	
-	public void userLoginController()
+	public void userLoginController(Users users)
 	{
-		loginUserInput();
+		loginUserInput(users);
 	}
 	
-	void loginUserInput()
+	void loginUserInput(Users users)
 	{
 		
 		String loginID, loginPw;
 		boolean success = true;
 		UserInfo loggedin = null;
 		
-		loginService.readFromFileUsers(usersList);
+		//loginService.readFromFileUsers(users);
+		loginService.callReadFromFileUsers(users);
 		
-		//read from file to compare user logged in ID
-
-//		FileReader fr;
-//		BufferedReader br;
-//		
-//		try {
-//			fr = new FileReader("User1.csv");
-//			br = new BufferedReader(fr);
-//			String var = br.readLine();
-//			
-//			
-//			while(var != null) {
-//	
-//				String[] record = var.split(",");            
-//				
-//	           // UserInfo user1 = new UserInfo(record[0], record[1], record[2], Double.value`Of(record[3]));
-//				UserInfo user1 = new UserInfo(record[0], record[1], record[2], record[3]);
-//	            
-//	            usersList.add(user1);
-//	           
-//	            var = br.readLine();
-//			}
-//			
-//		    br.close();
-//		    fr.close();
-//		    		    
-//		} catch (FileNotFoundException e) {
-//			
-//			e.printStackTrace();
-//			
-//		} catch (IOException e) {
-//			
-//			e.printStackTrace();
-//		}
+		//LoginDAO2 loginDAO = new LoginDAOImpl2();
 		
-		//end of read from file to compare user logged in ID		
-		
+		System.out.println(users.getUsersList());
+					
 		
 		int temp = 1;
 		
@@ -83,9 +52,8 @@ public class LoginController2 {
 	    System.out.println("Password: ");
 	    loginPw = s.nextLine();
 	   
-	    LoginDAO2 loginDAO = new LoginDAOImpl2(usersList);
 	    
-	    success = loginDAO.userLoggedIn(loginID, loginPw);
+	    success = loginService.callUserLoggedIn(loginID, loginPw, users);
 	    
 	   
 		if (success == false){
@@ -100,9 +68,9 @@ public class LoginController2 {
 	    }
 	    else {
 	    
-	    	for (int i=0; i<usersList.size(); i++) {
-				if (loginID.equals(usersList.get(i).getEmail())){
-					loggedin = usersList.get(i);
+	    	for (int i=0; i<users.getUsersList().size(); i++) {
+				if (loginID.equals(users.getUsersList().get(i).getEmail())){
+					loggedin = users.getUsersList().get(i);
 					
 				}
 		    }
@@ -114,7 +82,7 @@ public class LoginController2 {
 		
 		if (success == true) {
 			System.out.println("Welcome User " + loggedin.getEmail());
-			loginService.printBankLoginMenu(loggedin);
+			loginService.callPrintBankLoginMenu(loggedin, users);
 			
 		}
 		

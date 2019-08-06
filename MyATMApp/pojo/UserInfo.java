@@ -8,7 +8,6 @@ public class UserInfo {
 	private String email;
 	private String password;
 	private String color;
-	//private static double bankAmount;
 	private String bankAmount;
 	public double tempAmount;
 	
@@ -22,14 +21,6 @@ public class UserInfo {
 		return doubleBankAmount;
 	}
 	
-	/*public static String depositAmount(double amt) {
-		String strAmt = "";
-		
-		bankAmount += amt;
-		strAmt = Double.toString(amt);
-		System.out.println("amt="+amt+"|"+"strAmt"+strAmt);
-		return strAmt;
-	}*/
 	
 	public double withdrawAmount(double amt)
 	{
@@ -46,14 +37,6 @@ public class UserInfo {
 		return email;
 	}
 	
-	//test comment this part
-	/*public UserInfo(String email, String password, String color) {
-		//super();
-		this.email = email;
-		this.password = password;
-		this.color = color;
-	}*/
-	//end of test comment
 	
 	public UserInfo(String email, String password, String color, String bankAmount) {
 	//super();
