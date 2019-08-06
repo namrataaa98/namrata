@@ -2,10 +2,12 @@ package service;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -53,34 +55,14 @@ public class LoginServiceImpl2 implements LoginService2 {
 					}
 					System.out.println("$"+temp+" dollars deposited successfully!!");
 					
+					//updateBalance(logInfo, temp);
+					
 					amount += logInfo.depositAmount(temp);
 					strTemp += Double.toString(amount);
 					
-					//writing amount to file
+					updateBalance(logInfo, strTemp);
 					
-					FileWriter fw;
-					BufferedWriter bw;
-				
-					UserInfo user = new UserInfo(logInfo.getEmail(), logInfo.getPassword(), logInfo.getColor(), strTemp);
-					usersList.add(user);
 					
-					try {
-						fw = new FileWriter("User1.csv", true);
-						bw = new BufferedWriter(fw);
-						
-						bw.write(user.toString() + "\n");
-						
-						bw.close();
-						fw.close();
-						
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} //opens file in append mode
-					
-					//end of writing amount to file
-					
-					//readFromFileUsers(usersList);
 					
 					continueTransaction(logInfo);
 					break;
@@ -99,7 +81,10 @@ public class LoginServiceImpl2 implements LoginService2 {
 						System.out.println("Sorry!! insufficient balance");
 						continueTransaction(logInfo);
 					}
-						logInfo.withdrawAmount(temp);
+						
+						amount += logInfo.withdrawAmount(temp);
+						strTemp += Double.toString(amount);
+						updateBalance(logInfo, strTemp);
 						System.out.println("Transaction Successful!!");
 						continueTransaction(logInfo);
 						break;
@@ -107,6 +92,7 @@ public class LoginServiceImpl2 implements LoginService2 {
 					
 		
 	}
+
 
 	@Override
 	public void continueTransaction(UserInfo logInfo) {
@@ -145,14 +131,56 @@ public class LoginServiceImpl2 implements LoginService2 {
 		FileReader fr;
 		BufferedReader br;
 		
+//		//test code
+//		
+//		FileReader fr = new FileReader("User2.csv");
+//		BufferedReader br = new BufferedReader(fr);
+//		String var = br.readLine();
+//		
+//		while(var != null)
+//		{ 
+//			var = var.trim(); // remove leading and trailing whitespace
+//		    if (!var.equals("")) // don't write out blank lines
+//		    {
+//		        fw.write(var, 0, var.length());
+//		    }
+//		}
+//		
+//		//end of test code
+		
 		try {
 			
-			fr = new FileReader("User1.csv");
+			fr = new FileReader("User2.csv");
 			br = new BufferedReader(fr);
 			String var = br.readLine();
+			String out="";
+			
+			FileWriter fw = new FileWriter("User2.csv", true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			//File.WriteAllLines(filepath,File.ReadAllLines(filepath).Where(l => !string.IsNullOrWhiteSpace(l)));
+			
+			//while ((line = br.readLine()) != null && !"".equals(line = br.readLine().trim()))
+			
+			//while(var != null && !"".equals(var.trim())) {
 			
 			while(var != null) {
-	
+				
+				var = var.trim(); // remove leading and trailing whitespace
+			    if (!var.equals("")) // don't write out blank lines
+			    {
+			        fw.write(var, 0, var.length());
+			    }
+				
+				// line = line.trim();
+				
+//				if (var.replace(",", "").equals(null) || var.replace(",", "").equals("")) {
+//				   var.replace(",", "");
+//				    break;
+//				}
+				
+				br.lines().filter(line -> line.matches("(\\d+)(,\\s*\\d+)*"));
+				
 				String[] record = var.split(",");            
 				
 	           // UserInfo user1 = new UserInfo(record[0], record[1], record[2], Double.value`Of(record[3]));
@@ -162,7 +190,12 @@ public class LoginServiceImpl2 implements LoginService2 {
 	            usersList.add(user1);
 	           
 	            var = br.readLine();
-			}
+	            
+	            //continue;
+	            
+				//}
+				}
+			
 			
 		    br.close();
 		    fr.close();
@@ -189,7 +222,7 @@ public class LoginServiceImpl2 implements LoginService2 {
 		usersList.add(user);
 		
 		try {
-			fw = new FileWriter("User1.csv", true);
+			fw = new FileWriter("User2.csv", true);
 			bw = new BufferedWriter(fw);
 			
 			bw.write(user.toString() + "\n");
@@ -203,6 +236,84 @@ public class LoginServiceImpl2 implements LoginService2 {
 		} //opens file in append mode
 		
 	}
+
+	@Override
+	public void updateBalance(UserInfo logInfo, String tempAmount) {
+		
+		FileWriter fw;
+		BufferedWriter bw;
+		PrintWriter pw;
+		
+		String filepath = "User2.csv";
+		String tempFile = "temp2.csv";
+		File oldFile = new File(filepath);
+		File newFile = new File(tempFile);
+		String email="", password ="", color="", balance="";
+		
+		
+	
+		//UserInfo user = new UserInfo(logInfo.getEmail(), logInfo.getPassword(), logInfo.getColor(), tempAmount);
+		//usersList.add(user);
+		
+		try {
+			fw = new FileWriter(tempFile, true);
+			bw = new BufferedWriter(fw);
+			pw = new PrintWriter(bw);
+			Scanner x = new Scanner(new File(filepath));
+			x.useDelimiter("[,\n]"); 
+			
+			
+		
+			//File.WriteAllLines(filepath,File.ReadAllLines(filepath).Where(l => !string.IsNullOrWhiteSpace(l)));
+			
+			
+			
+			while(x.hasNext()) {
+				
+				email = x.next();
+				password = x.next();
+				color = x.next();
+				balance = x.next();
+				
+				if(email.equals(logInfo.getEmail()))
+				{
+					//pw.println(email + "," + logInfo.getPassword() + "," + logInfo.getColor() + "," + tempAmount);
+					UserInfo user = new UserInfo(logInfo.getEmail(), logInfo.getPassword(), logInfo.getColor(), tempAmount);
+					usersList.add(user);
+					pw.println(user.toString() + "\n");
+					
+				}
+				
+				else {
+					
+					pw.println(email + "," + password + "," + color + "," + balance);
+					
+				}
+				
+				
+			
+		    } 
+			
+			x.close();
+			pw.close();
+			oldFile.delete();
+			File dump = new File(filepath);
+			newFile.renameTo(dump);
+			
+			
+			
+			
+			
+			bw.close();
+			fw.close();
+			
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+	}
+}
 	
 
-}
+

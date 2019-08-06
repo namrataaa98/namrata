@@ -10,6 +10,9 @@ public class UserInfo {
 	private String color;
 	//private static double bankAmount;
 	private String bankAmount;
+	public double tempAmount;
+	
+	
 	
 	public double depositAmount(double amt)
 	{
@@ -28,11 +31,12 @@ public class UserInfo {
 		return strAmt;
 	}*/
 	
-	public void withdrawAmount(double amt)
+	public double withdrawAmount(double amt)
 	{
 		double doubleBankAmount = 0.0;		
 		doubleBankAmount = Double.valueOf(bankAmount);
 		doubleBankAmount -= amt;
+		return doubleBankAmount;
 	}
 	
 	private static String DefaultEmail = "xyz@gmail.com";
@@ -102,7 +106,14 @@ public class UserInfo {
 	public void setBankAmount(String bankAmount) {
 		bankAmount = bankAmount;
 	}
-	
+
+	public double getTempAmount() {
+		return tempAmount;
+	}
+
+	public void setTempAmount(double tempAmount) {
+		this.tempAmount = tempAmount;
+	}
 	
 	
 

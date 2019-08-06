@@ -78,11 +78,11 @@ public class Controller {
 		
 		
 	
-		for(int i=0; i<empDAO.empList().size(); i++) {
+		for(int i=0; i<empDAO.getEmpList().size(); i++) {
 			
-			if (empDAO.empList().get(i).getEmpID() == ID) {
+			if (empDAO.getEmpList().get(i).getEmpID() == ID) {
 				
-				Employee emp = empDAO.empList().get(i);
+				Employee emp = empDAO.getEmpList().get(i);
 				
 				System.out.println("Update Password");
 				String newPass = sc.next(); 
@@ -100,17 +100,17 @@ public class Controller {
 		else if (no == 3){
 		//delete employee
 		System.out.println("Employee Records:");
-		System.out.println(empDAO.empList());
+		System.out.println(empDAO.getEmpList());
 		
 		System.out.println("Enter ID of the employee record which you wish to delete:");
 		
 		ID = sc.nextInt();
 		
-		for(int i=0; i<empDAO.empList().size(); i++) {
+		for(int i=0; i<empDAO.getEmpList().size(); i++) {
 			
-			if (empDAO.empList().get(i).getEmpID() == ID) {
+			if (empDAO.getEmpList().get(i).getEmpID() == ID) {
 				
-				Employee emp = empDAO.empList().get(i);
+				Employee emp = empDAO.getEmpList().get(i);
 				
 				System.out.println(emp);
 				System.out.println("Are you sure you want to delete this record?(y/n)");
@@ -129,17 +129,22 @@ public class Controller {
 		
 		//End of delete employee
 		else {
+			
 		//Get emp by ID
 		System.out.println("Enter the ID of the particular employee's record which you would like to see: ");
 		ID = sc.nextInt();
 		
-        empDAO.getEmpByID(ID);
-		
+		for(int i=0; i<empDAO.getEmpList().size(); i++) {
 			
-			
+			if (empDAO.getEmpList().get(i).getEmpID() == ID) {
+				
+				empDAO.getEmpByID(ID);
+				//break;
+				
+			}
+		}
 		
-		
-		
+       // empDAO.getEmpByID(ID);
 		//End of get emp by ID
 		}
 		

@@ -131,7 +131,7 @@ public class RegisterController {
 		usersList.add(user);
 		
 		try {
-			fw = new FileWriter("User1.csv", true);
+			fw = new FileWriter("User2.csv", true);
 			bw = new BufferedWriter(fw);
 			
 			bw.write(user.toString() + "\n");

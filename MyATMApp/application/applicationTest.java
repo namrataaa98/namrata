@@ -16,9 +16,14 @@ public class applicationTest {
 		RegisterController registerController = new RegisterController();
 		
 		registerController.userRegController();
+		
 	
 	}
 	
 
 	
+	
 }
+
+
+

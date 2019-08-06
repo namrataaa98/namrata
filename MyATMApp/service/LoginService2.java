@@ -13,5 +13,6 @@ public interface LoginService2 {
 	public void printWrongInput(UserInfo logInfo);
 	public void readFromFileUsers(List<UserInfo> usersList);
 	public void writeToFile(UserInfo LogInfo);
+	public void updateBalance(UserInfo logInfo, String strTemp);
 
 }

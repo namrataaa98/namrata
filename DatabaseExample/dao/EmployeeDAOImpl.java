@@ -33,17 +33,21 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		
 		 
 		try {
-			//getConnection();
-			con = MyConnection.prepareConnection();
-			String query = "INSERT INTO Employees ("
-				    + " empID,"
-				    + " password,"
-				    + " name,"
-				    + " dateOfBirth "
-				    + " ) VALUES ("
-				    + "?, ?, ?, ?)";
+			getConnection();
+			//con = MyConnection.prepareConnection();
 			
-				st = con.prepareStatement(query);
+			//comment
+//			String query = "INSERT INTO employees ("
+//				    + " empID,"
+//				    + " password,"
+//				    + " name,"
+//				    + " dateOfBirth "
+//				    + " ) VALUES ("
+//				    + "?, ?, ?, ?)";
+//			
+//				st = con.prepareStatement(query);
+			
+			    st = con.prepareStatement("INSERT INTO employees (empID, password, name, dateOfBirth) values (?,?,?,?)");
 			    st.setInt(1, eRef.getEmpID());
 			    st.setString(2, eRef.getPassword());
 			    st.setString(3, eRef.getEmpName());
@@ -58,6 +62,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		//end of comment
 		    
 	
 		
@@ -69,12 +75,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		 
 			
 			try {
-				//getConnection();
-				con = MyConnection.prepareConnection();
-				String query = "UPDATE employees SET password = ?, name = ? where empID = ?";
 				
-				    st = con.prepareStatement(query);
-				
+				//con = MyConnection.prepareConnection();
+				//String query = "UPDATE employees SET password = ?, name = ? where empID = ?";
+				getConnection();
+				    //st = con.prepareStatement(query);
+				    st = con.prepareStatement("UPDATE employees SET password = ?, name = ? where empID = ?");
 				    st.setString(1, eRef.getPassword());
 				    st.setString(2, eRef.getEmpName());
 				    st.setInt(3, eRef.getEmpID());
@@ -94,16 +100,18 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 
 	@Override
-	public List<Employee> empList()  {
+	public List<Employee> getEmpList()  {
 		
 		List<Employee> empList = new ArrayList<Employee>();
-		//getConnection();
-		con = MyConnection.prepareConnection();
+		
+		//con = MyConnection.prepareConnection();
 
 		try {
 
-			String query = "SELECT empID, password, name, dateOfBirth FROM employees";
-			st = con.prepareStatement(query);
+			//String query = "SELECT empID, password, name, dateOfBirth FROM employees";
+			getConnection();
+			//st = con.prepareStatement(query);
+			 st = con.prepareStatement("SELECT empID, password, name, dateOfBirth FROM employees");
 			ResultSet rs;
 			rs = st.executeQuery();
 			
@@ -132,35 +140,33 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	
 
 	@Override
-	public Employee getEmpByID(int ID){
-		//Employee eRef = new Employee();
-		
+	public void getEmpByID(int ID){
 		
 		try {
-			//getConnection();
-			con = MyConnection.prepareConnection();
-			String query = "SELECT * FROM employees where empID = ?";
+			getConnection();
+			String query = "SELECT * FROM employees where empID = '" + ID + "'";
 			
 			    st = con.prepareStatement(query);
-			    st.setInt(1, eRef.getEmpID());
+			//st = con.prepareStatement("SELECT * FROM employees where empID = ? ");
+			
+			   // st.setInt(1, eRef.getEmpID());
 			    ResultSet rs;
 			    rs = st.executeQuery(query);
 
-				Employee emp = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+			   while(rs.next()) {
+					Employee eRef = new Employee(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+				    System.out.println(eRef);
 
-				System.out.println(emp);
-				
+			   }
 
-			   // st.executeUpdate();
-			    //System.out.println(eRef.getPassword());
-			    System.out.println("Return ID: ");
-			    
-			  //  System.out.println(empList());
+			  
+;			    
+			
 			    
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//return eRef; 
+		return; 
 		
 	}
 
@@ -171,18 +177,20 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		//System.out.println(empList());
 		
 		try {
-			//getConnection();
-			con = MyConnection.prepareConnection();
-			String query = "DELETE FROM employees where empID = ?";
+			getConnection();
+			//con = MyConnection.prepareConnection();
+			//String query = "DELETE FROM employees where empID = ?";
 			
-			    st = con.prepareStatement(query);
+			    //st = con.prepareStatement(query);
+			
+			st = con.prepareStatement("DELETE FROM employees where empID = ?");
 			    st.setInt(1, eRef.getEmpID());
 			    
 			   
 			    st.executeUpdate();
 			    //System.out.println(eRef.getPassword());
 			    System.out.println("Record Deleted Successfully");
-			    System.out.println(empList());
+			    System.out.println(getEmpList());
 			    
 			   
 		} catch (Exception e) {

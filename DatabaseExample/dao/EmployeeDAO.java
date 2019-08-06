@@ -9,8 +9,8 @@ public interface EmployeeDAO {
 
 	public void addEmp(Employee eRef) ;
 	public void updateEmp(Employee eRef);
-	public List<Employee> empList() ;
-	public Employee getEmpByID(int ID) ;
+	public List<Employee> getEmpList() ;
+	public void getEmpByID(int ID) ;
 	public void removeEmp(Employee eRef) ;
 	
 }
