@@ -18,8 +18,6 @@ import pojo.Employee;
 public class EmployeeDAOImpl implements EmployeeDAO {
 	
 	
-	
-	
 	Connection con; 
 	PreparedStatement st;
 	
@@ -64,8 +62,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		}
 		
 		//end of comment
-		    
-	
+		  
 		
 	}
 
@@ -76,8 +73,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			
 			try {
 				
-				//con = MyConnection.prepareConnection();
-				//String query = "UPDATE employees SET password = ?, name = ? where empID = ?";
+				
 				getConnection();
 				    //st = con.prepareStatement(query);
 				    st = con.prepareStatement("UPDATE employees SET password = ?, name = ? where empID = ?");
@@ -96,7 +92,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 				e.printStackTrace();
 			}
 				
-		
 	}
 
 	@Override
@@ -126,7 +121,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			}
 			
 			
-			
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -147,7 +141,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			String query = "SELECT * FROM employees where empID = '" + ID + "'";
 			
 			    st = con.prepareStatement(query);
-			//st = con.prepareStatement("SELECT * FROM employees where empID = ? ");
+			   //st = con.prepareStatement("SELECT * FROM employees where empID = ? ");
 			
 			   // st.setInt(1, eRef.getEmpID());
 			    ResultSet rs;
@@ -160,7 +154,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			   }
 
 			  
-;			    
+	    
 			
 			    
 		} catch (Exception e) {
