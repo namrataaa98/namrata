@@ -11,14 +11,17 @@ import java.util.Scanner;
 import pojo.UserInfo;
 import pojo.Users;
 import service.LoginServiceImpl2;
+import service.RegisterService;
+import service.RegisterServiceImpl;
 
 public class RegisterController {
 	
-	LoginServiceImpl2 loginService; // LoginService is an interface
+	LoginServiceImpl2 loginService;
 	UserInfo user; 
 	Scanner s = new Scanner(System.in);
-	//List<UserInfo> usersList = new ArrayList<UserInfo>();
 	Users users = new Users();
+	RegisterService registerService;
+	PasswordController passwordController = new PasswordController();
 	
 	public void userRegController()
 	{
@@ -30,9 +33,7 @@ public class RegisterController {
 		
 		int choice = 0;
 		
-		
-		
-		while(true) //true means continue forever till there's a break
+		while(true) 
 		{
 			try 
 			{
@@ -43,8 +44,8 @@ public class RegisterController {
 			catch (Exception e) 
 			{
 				System.out.println("Invalid input, try again");
-				s.next(); //reset the input
-				continue; //When exception is found, break is automatic 
+				s.next(); 
+				continue;  
 			}
 			break;
 		}
@@ -62,9 +63,10 @@ public class RegisterController {
 					break;
 			case 2 : loginController.userLoginController(users);
 					break;
-			case 3 : System.out.println("Forgot Password");
+			case 3 : passwordController.forgotPasswordController(users);
 					break;
-			case 4 : System.out.println("Testing la");
+			case 4 : System.out.println("Exiting..");
+			         System.exit(0);
 			        break;
 			default: System.out.println("Wrong input, try again : \n");
 			         
@@ -79,8 +81,7 @@ public class RegisterController {
 		
 	}
 	
-	
-	
+
 	public void Message() {
 		
 		System.out.println("User Home Page : ");
@@ -100,6 +101,7 @@ public class RegisterController {
 		FileWriter fw;
 		BufferedWriter bw;
 		String bankAmount = "0.0";
+		registerService = new RegisterServiceImpl();
 		
 		String email, password = "", color = "";
 		
@@ -109,7 +111,7 @@ public class RegisterController {
 		System.out.println("Enter email");
 		email = sc.next();
 		
-		if(validateEmail(email) == true) 
+		if(registerService.callValidateEmail(email) == true) 
 		{
 	
 			do {
@@ -117,7 +119,7 @@ public class RegisterController {
 				password = sc.next();
 				System.out.println("Re-type password: ");
 				String pass2 = sc.next();
-			if (validatePassword(password, pass2) == true) {
+			if (registerService.callValidatePassword(password, pass2)== true) {
 				success = true;
 				break;
 			}
@@ -144,61 +146,18 @@ public class RegisterController {
 			fw.close();
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
-		} //opens file in append mode
-		
-		
+			
+		} 
 		
 		System.out.println("Registration successful");
-		
-		
-		
-		System.out.println(users.getUsersList());
+		//System.out.println(users.getUsersList());
 		
 		mainMenu();
 		
 	}
 	
-	public static boolean validateEmail(String email) {
-		
-		boolean status;
-		
-		if(email.equals("xyz@gmail.com"))
-		{
-			System.out.println("Email already exists.");
-			status = false;
-		}
-		else
-		{
-			
-			status = true;
-		}
-		
-		return status;
-		
-	}
-	
-	public static boolean validatePassword(String password, String pass2) {
-		
-		boolean status;
-		
-		if(!(password.equals(pass2)))
-		{
-			System.out.println("Passwords do not match");
-			status = false;
-			//success = false;
-		}
-		else
-		{
-			
-			status = true;
-		}
-		
-		return status;
-		
-		
-	}
-	
+
 
 }

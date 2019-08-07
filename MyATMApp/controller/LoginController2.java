@@ -19,8 +19,6 @@ import service.LoginServiceImpl2;
 
 
 public class LoginController2 {
-	//List<UserInfo> usersList = new ArrayList<UserInfo>();
-	//Users users = new Users();
 	LoginService2 loginService = new LoginServiceImpl2();
 	Scanner s = new Scanner(System.in);
 	
@@ -36,13 +34,10 @@ public class LoginController2 {
 		boolean success = true;
 		UserInfo loggedin = null;
 		
-		//loginService.readFromFileUsers(users);
+		//function "callReadFromFileUsers" reads the file that has user data 
 		loginService.callReadFromFileUsers(users);
-		
-		//LoginDAO2 loginDAO = new LoginDAOImpl2();
-		
-		System.out.println(users.getUsersList());
-					
+	
+		//System.out.println(users.getUsersList());		
 		
 		int temp = 1;
 		
@@ -52,7 +47,8 @@ public class LoginController2 {
 	    System.out.println("Password: ");
 	    loginPw = s.nextLine();
 	   
-	    
+	    //success returns true or false value based on whether the login credentials of the user match the credentials of any user in the list
+	    //that has registered
 	    success = loginService.callUserLoggedIn(loginID, loginPw, users);
 	    
 	   
@@ -67,7 +63,8 @@ public class LoginController2 {
 	    	
 	    }
 	    else {
-	    
+	    	
+	    //Checks users list to find user that is trying to log in; if user = user in list, store in variable 'logged in'
 	    	for (int i=0; i<users.getUsersList().size(); i++) {
 				if (loginID.equals(users.getUsersList().get(i).getEmail())){
 					loggedin = users.getUsersList().get(i);
@@ -82,6 +79,8 @@ public class LoginController2 {
 		
 		if (success == true) {
 			System.out.println("Welcome User " + loggedin.getEmail());
+			
+			//upon successful login, directs user to the next page which is a menu consisting of actions relating to bank services.
 			loginService.callPrintBankLoginMenu(loggedin, users);
 			
 		}
